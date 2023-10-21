@@ -1,0 +1,32 @@
+    - name: Installing {{pakg}} service
+      action: yum pkg={{pakg}} state=present
+      notify: Restart the {{pakg}} service
+
+    - name: Copy Files from Server to Client
+      action: copy src=/home/ansible/friend dest=/tmp/ mode=777
+
+    - name: Copy Files from client to Client
+      action: copy remote_src=yes src=/home/ansible/hello dest=/tmp/ mode=555
+
+    - name: unarchive Files from Server to Client
+      action: unarchive src=/home/ansible/khazana.tar dest=/home/ansible/ mode=544
+
+    - name: Copy content of file
+      action: copy content='Hello Mr Abhishek' dest=/tmp/lelo_meri mode=777
+
+    - name: Create users
+      action: user name={{item}}
+      with_items:
+        - abhishek1ji
+        - megha1ji
+
+    - name: Create a file
+      action: file path=/var/ftp/pub/gajodhar state=touch
+      when: ansible_os_family=='RedHat'
+
+    - name: Create a file
+      action: file path=/var/ftp/pub/gajodhar1 state=touch
+      when: ansible_os_family=='Debian'
+
+
+
